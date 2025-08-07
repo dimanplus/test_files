@@ -52,6 +52,9 @@ class NewFileHandler(FileSystemEventHandler):
                 session.close()
 
 def monitor_folder(folder_path):
+    # создать папку если вдруг её нет
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
     event_handler = NewFileHandler()
     observer = Observer()
     observer.schedule(event_handler, folder_path, recursive=False)
