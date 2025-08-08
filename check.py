@@ -38,12 +38,12 @@ class NewFileHandler(FileSystemEventHandler):
                 session.add(new_file)
                 session.commit()
                 print(f"В БД обавлен файл: {new_file}")
-                process_file(file_path) # это для моего локального варианта
+                process_file.delay(file_path) # это для моего локального варианта
 
                 # upload_file.delay(file_path) # это для рабочего MinIO
                 ''' 
                 НО... тогда придется запустить воркер отдельно через команду:
-                celery -A download worker --loglevel=info --pool=solo 
+                celery -A download worker --loglevel=info --pool=threads  
                 '''
                 print(f"файл копирован в новую папку")
             except IntegrityError:
