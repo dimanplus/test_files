@@ -5,6 +5,7 @@ import pika
 
 from celery import Celery
 from minio import Minio
+import boto3 # для работы с MinIO если загрузка через него
 
 from config import *
 from models import *

@@ -8,10 +8,6 @@ import time
 # в моём случае использую watchdog, но для Celery код будет рядом
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
-from celery import Celery
-
-from minio import Minio
-import boto3 # для работы с MinIO если загрузка через него
 
 import pika
 
@@ -43,7 +39,12 @@ class NewFileHandler(FileSystemEventHandler):
                 session.commit()
                 print(f"В БД обавлен файл: {new_file}")
                 process_file(file_path) # это для моего локального варианта
+
                 # upload_file.delay(file_path) # это для рабочего MinIO
+                ''' 
+                НО... тогда придется запустить воркер отдельно через команду:
+                celery -A download worker --loglevel=info --pool=solo 
+                '''
                 print(f"файл копирован в новую папку")
             except IntegrityError:
                 session.rollback()

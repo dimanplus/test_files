@@ -9,6 +9,6 @@ RABBITMQ_URL_FILES = "localhost"
 RABBITMQ_URL_NOTIFY = "amqp://guest:guest@localhost"
 RABBITMQ_QUEUE = "file_notifications"
 
-# Настройки для Redis 
-CELERY_BROKER = "redis://redis:6379/0"
-CELERY_BACKEND = "redis://redis:6379/1"
+# Тут должны быть настройки для Redis (но у мебя все через RabbitMQ)
+CELERY_BROKER = "amqp://guest:guest@localhost"
+CELERY_BACKEND = "rpc://"
